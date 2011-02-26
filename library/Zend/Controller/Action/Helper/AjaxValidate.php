@@ -49,7 +49,6 @@ class Zend_Controller_Action_Helper_AjaxValidate extends Zend_Controller_Action_
         
         function validate(element) {
             $.post('.', {element: element.name, value: $(element).val()}, function(data) {
-                console.log(data);
                 if (data.result == 'ok') {
                     $('#info_' + element.name).addClass("zf-ajax-validate-ok");
                     $('#info_' + element.name).removeClass("zf-ajax-validate-error");
