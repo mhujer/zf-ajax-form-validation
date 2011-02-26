@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+.hint {
+	color: grey;
+	font-size: 80%;
+	padding-bottom: 5px;
+}
+
+.zf-ajax-validate-error {
+	color: red;
+	font-weight: bold;
+}
+
+.zf-ajax-validate-ok {
+	color: lime;
+	font-weight: bold;
+}
