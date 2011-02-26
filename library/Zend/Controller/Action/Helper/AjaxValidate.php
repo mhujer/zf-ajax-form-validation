@@ -23,16 +23,9 @@ class Zend_Controller_Action_Helper_AjaxValidate extends Zend_Controller_Action_
     protected function _injectJsValidation(Zend_Form $form)
     {
         foreach ($form->getElements() as $el) {
-            $el->addDecorator(
-                'HtmlTag',
-                array(
-                    'tag' => 'p',
-                    'class' => 'hint',
-                    'id' => 'info_' . $el->getName(),
-                    'placement' => 'APPEND'
-                )
-            );
-            $el->setAttrib('class', ($el->getAttrib('class') ? $el->getAttrib('class') . ' ' : '') . 'zf-ajax-validate');
+            if ($el instanceof Zend_Form_Element_Text) { //@todo Add validation for more elements
+                $el->setAttrib('class', ($el->getAttrib('class') ? $el->getAttrib('class') . ' ' : '') . 'zf-ajax-validate');
+            }
         }
     }
     
@@ -40,7 +33,7 @@ class Zend_Controller_Action_Helper_AjaxValidate extends Zend_Controller_Action_
     {
         $this->getActionController()->view->headScript()->captureStart();
         ?>
-        <?php if (false) {?><script type="text/javascript"><?php } //helper pro syntax highlight ?>
+        <?php if (false) {?><script type="text/javascript"><?php } //helper for syntax highlight ?>
         $(document).ready(function() {
             $('.zf-ajax-validate').keyup(function(e){
                 validate(e.srcElement);
@@ -49,22 +42,22 @@ class Zend_Controller_Action_Helper_AjaxValidate extends Zend_Controller_Action_
         
         function validate(element) {
             $.post('.', {element: element.name, value: $(element).val()}, function(data) {
+                $(element).parent().find('.zf-ajax-validate-error').remove();
+                $(element).parent().find('.zf-ajax-validate-ok').remove();
                 if (data.result == 'ok') {
-                    $('#info_' + element.name).addClass("zf-ajax-validate-ok");
-                    $('#info_' + element.name).removeClass("zf-ajax-validate-error");
-                    $('#info_' + element.name).html('OK');
+                    o = '<ul class="zf-ajax-validate-ok"><li>OK</li></ul>';
+                    $(element).parent().append(o);
                 } else {
-                    $('#info_' + element.name).removeClass("zf-ajax-validate-ok");
-                    $('#info_' + element.name).addClass("zf-ajax-validate-error");
-                    var out = '';
+                    o = '<ul class="zf-ajax-validate-error">';
                     $.each(data.messages, function(index,value) {
-                        out += '<p>' + value + '</p>';
+                        o += '<li>' + value + '</li>';
                     });
-                    $('#info_' + element.name).html(out);
+                    o += '<ul>';
+                    $(element).parent().append(o);
                 }
             });
         }
-        <?php if (false) {?></script><?php } //helper pro syntax highlight ?>
+        <?php if (false) {?></script><?php } //helper for syntax highlight ?>
         <?php
         $this->getActionController()->view->headScript()->captureEnd();
     }

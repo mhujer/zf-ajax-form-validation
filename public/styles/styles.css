@@ -1,17 +1,17 @@
 @CHARSET "UTF-8";
 
-.hint {
-	color: grey;
-	font-size: 80%;
-	padding-bottom: 5px;
+body {
+    font-family: sans-serif;	
 }
 
 .zf-ajax-validate-error {
 	color: red;
 	font-weight: bold;
+	font-size: 90%;
 }
 
 .zf-ajax-validate-ok {
 	color: lime;
 	font-weight: bold;
+	font-size: 60%;
 }
