@@ -1,1 +1,5 @@
 Ajax validation for Zend_Form
+
+References:
+http://mnshankar.wordpress.com/2010/05/30/using-ajax-jquery-to-validate-a-zend-form/
+http://framework.zend.com/wiki/display/ZFPROP/Zend_Form_Decorator_JsValidation+-+Jani+Hartikainen
